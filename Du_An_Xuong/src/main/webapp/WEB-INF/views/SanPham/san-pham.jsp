@@ -61,7 +61,7 @@
                     <td>${sp.nhaSanXuat.tennsx}</td>
                     <td>${sp.thuongHieu.tenthuonghieu}</td>
                     <td>
-                            <button class="btn btn-warning"><a href="/sanpham/delete?id=${sp.id}">XÓA</a></button>
+                            <button class="btn btn-warning"><a href="/sanpham/spct">Sản Phẩm Chi Tiết</a></button>
                             <button class="btn btn-info"><a href="/sanpham/detail?id=${sp.id}">CHI TIẾT</a></button>
                     </td>
                 </tr>

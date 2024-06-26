@@ -1,10 +1,9 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.KichThuoc;
+import com.example.demo.entity.MauSac;
 import com.example.demo.entity.SanPham;
-import com.example.demo.repository.CoAoRepository;
-import com.example.demo.repository.DanhMucRepository;
-import com.example.demo.repository.NhaSanXuatRepository;
-import com.example.demo.repository.ThuongHieuRepository;
+import com.example.demo.repository.*;
 import com.example.demo.service.SanPhamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -14,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/sanpham")
@@ -28,6 +29,10 @@ public class SanPhamController {
     CoAoRepository coAoRepository;
     @Autowired
     NhaSanXuatRepository nhaSanXuatRepository;
+    @Autowired
+    MauSacRepository mauSacRepository;
+    @Autowired
+    KichThuocRepository kichThuocRepository;
     Sort sort = Sort.by(Sort.Direction.DESC,"id");
     @GetMapping("/hienthi")
     public String hienthisp(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
@@ -54,10 +59,9 @@ public class SanPhamController {
         return "SanPham/sanpham-add";
     }
 
-    @GetMapping("delete")
-    public String delete(@RequestParam("id")int id ,Model model){
-        sanPhamService.delete(id);
-        return "redirect:/sanpham/hienthi";
+    @GetMapping("/spct")
+    public String spct(Model model){
+        return "redirect:/sanpham/formSPCT";
     }
     @PostMapping("update")
     public String update(SanPham sp){

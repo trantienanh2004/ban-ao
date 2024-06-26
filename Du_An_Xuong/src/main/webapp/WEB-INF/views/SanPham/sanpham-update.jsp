@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -18,6 +19,7 @@
 <div class="border fw-bold" style="background-color: #f4f4f4;width: 98%;margin-left: 10px">
   <div style="margin-left: 10px;font-size: 12px">
 <%--      enctype="multipart/form-data"--%>
+
       <form action="/sanpham/update" method="post" >
           ID: <br>
           <input type="text" name="id" value="${onesp.id}" readonly> <br>
