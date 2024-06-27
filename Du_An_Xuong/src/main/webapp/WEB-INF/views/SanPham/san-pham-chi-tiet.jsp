@@ -70,6 +70,7 @@
     <%--///vùng để tạm--%>
 
 <div class="container mt-5"><h2>danh sách các sản phẩm thêm</h2>
+    <a class="btn btn-primary" href="/sanpham/themSPCT">ADD</a>
     <table class="table">
         <thead>
         <tr>
@@ -94,6 +95,7 @@
                 <th scope="col">${SPCT.so_luong_san_pham}</th>
                 <th scope="col">${SPCT.don_gia}</th>
                 <th scope="col">${SPCT.anh_san_pham_chi_tiet}</th>
+                <th scope="col">  <a class="btn btn-info" href="/sanpham/xoaSPCTtam?id=${SPCT.id}">xóa</a></th>
             </tr>
         </c:forEach>
 
@@ -129,7 +131,9 @@
         <th scope="col">${SPCT.so_luong_san_pham}</th>
         <th scope="col">${SPCT.don_gia}</th>
         <th scope="col">${SPCT.anh_san_pham_chi_tiet}</th>
-        <th scope="col"></th>
+        <th scope="col"><a class="btn btn-info" href="/sanpham/xoaSPCT?id=${SPCT.id}">xóa</a>
+            <a class="btn btn-info" href="/sanpham/suaSPCT?id=${SPCT.id}">sửa</a>
+        </th>
      </tr>
 </c:forEach>
 

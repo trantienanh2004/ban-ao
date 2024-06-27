@@ -26,6 +26,25 @@ SanPhamChiTietRepository sanPhamChiTietRepository;
       Pageable page = PageRequest.of(x,size,s);
       return sanPhamChiTietRepository.findAll(page);
   }
-
-
+  public SanPhamChiTiet timkiemspct(int id){
+      return sanPhamChiTietRepository.findById(id).orElse(null);
+  }
+  public void xoaSPCT(int id){
+      sanPhamChiTietRepository.deleteById(id);
+  }
+    public void xoaSPCTtam(int id) {
+        SanPhamChiTiet spctToRemove = null;
+        for (SanPhamChiTiet spct : SPCT_de_tam) {
+            if (spct.getId() == id) {
+                spctToRemove = spct;
+                break;
+            }
+        }
+        if (spctToRemove != null) {
+            SPCT_de_tam.remove(spctToRemove);
+        }
+    }
+    public void addSPCT(SanPhamChiTiet sanPhamChiTiet){
+      sanPhamChiTietRepository.save(sanPhamChiTiet);
+    }
 }

@@ -32,6 +32,7 @@ public class SanPhamChiTietComtroller {
 @Autowired
     SanPhamService sanPhamService;
 
+int id = 1;
 
 
     @GetMapping("/formSPCT")
@@ -47,35 +48,36 @@ public class SanPhamChiTietComtroller {
     }
 
     @PostMapping("/spctadd")
-    public String spctAdd(Model model, @Valid @ModelAttribute("SanPhamChiTiet") SanPhamChiTiet sanPhamChiTiet,
-                          @RequestParam("mauSac") List<Integer> mauSacIds,
-                          @RequestParam("kichThuoc") List<Integer> kichThuocIds) {
-
-
-        List<MauSac> mauSacs = mauSacService.listtheoid(mauSacIds);
-
-        // Đảm bảo sanPhamChiTiet đã được khởi tạo
-        if (sanPhamChiTiet == null) {
-            sanPhamChiTiet = new SanPhamChiTiet(); // hoặc khởi tạo theo cách khác
-        }
-
-        // Thiết lập từng MauSac vào sanPhamChiTiet
-        for (MauSac mauSac : mauSacs) {
-            sanPhamChiTiet.setMauSac(mauSac);
-        }
-
-        // Lấy danh sách các KichThuoc từ Service
-        List<KichThuoc> kichThuocs = kichThuocService.listtheoid(kichThuocIds);
-
-        // Thiết lập từng KichThuoc vào sanPhamChiTiet
-        for (KichThuoc kichThuoc : kichThuocs) {
-            sanPhamChiTiet.setKichThuoc(kichThuoc); // Đảm bảo rằng phương thức addKichThuoc() phải tồn tại trong đối tượng SanPhamChiTiet
-        }
-
+    public String spctAdd(Model model, @Valid @ModelAttribute("SanPhamChiTiet") SanPhamChiTiet sanPhamChiTiet) {
+    sanPhamChiTiet.setId(id);
+    sanPhamChiTiet.setSo_luong_san_pham(10);
+    sanPhamChiTiet.setDon_gia(10000.0);
+    sanPhamChiTiet.setAnh_san_pham_chi_tiet("chưa có");
+    id++;
         sanPhamChiTietService.SPCT_de_tam.add(sanPhamChiTiet);
 
         return "redirect:/sanpham/formSPCT";
     }
+    @GetMapping("/xoaSPCT")
+    public String xoaSPCT(@RequestParam("id")int id) {
+      sanPhamChiTietService.xoaSPCT(id);
 
+        return "redirect:/sanpham/formSPCT";
+    }
+    @GetMapping("/xoaSPCTtam")
+    public String xoaSPCTtam(@RequestParam("id")int id) {
+        sanPhamChiTietService.xoaSPCTtam(id);
 
+        return "redirect:/sanpham/formSPCT";
+    }
+    @GetMapping("/themSPCT")
+    public String themSPCT() {
+        for (SanPhamChiTiet spct: sanPhamChiTietService.SPCT_de_tam) {
+             spct.setId(null);
+            sanPhamChiTietService.addSPCT(spct);
+
+        }
+        sanPhamChiTietService.SPCT_de_tam.clear();
+        return "redirect:/sanpham/formSPCT";
+    }
 }
