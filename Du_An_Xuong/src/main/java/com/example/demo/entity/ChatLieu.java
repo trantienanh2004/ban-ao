@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,10 +19,13 @@ public class ChatLieu {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @NotBlank(message = "nhập đi mà")
     @Column(name = "MA_CHAT_LIEU")
     private String ma_chat_lieu;
+    @NotBlank(message = "nhập đi mà")
     @Column(name = "TEN_CHAT_LIEU")
     private String ten_chat_lieu;
+
     @Column(name = "NGAY_TAO")
     private LocalDate ngay_tao;
     @Column(name = "NGAY_SUA")
