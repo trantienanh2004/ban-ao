@@ -12,6 +12,19 @@ TEN_THUONG_HIEU NVARCHAR(225) NOT NULL,
 NGAY_TAO DATETIME DEFAULT GETDATE() ,
 NGAY_SUA DATETIME
 )
+----CHỈNH SỬA----
+---THƯƠNG HIÊU "MÃ"
+ALTER TABLE THUONG_HIEU
+ADD MA_THUONG_HIEU VARCHAR(10);
+------------------
+---DANH MUC "MÃ"
+ALTER TABLE DANH_MUC
+ADD MA_DANH_MUC VARCHAR(10);
+------------------
+---CỔ ÁO "MÃ"
+ALTER TABLE CO_AO
+ADD MA_CO_AO VARCHAR(10);
+------------------
 GO
 IF OBJECT_ID('CHAT_LIEU') IS NOT NULL
 DROP TABLE CHAT_LIEU
@@ -322,4 +335,4 @@ VALUES ('VOUCHER001', 'Voucher1', N'Giảm giá 10%', GETDATE(), DATEADD(MONTH, 
        ('VOUCHER002', 'Voucher2', N'Giảm giá 20%', GETDATE(), DATEADD(MONTH, 1, GETDATE()), '20%', 1, N'Áp dụng cho đơn hàng trên 1,000,000 đồng');
 
 
-	   select * from san_pham_chi_tiet
+	   select * from THUONG_HIEU
