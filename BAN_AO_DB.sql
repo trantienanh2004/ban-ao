@@ -261,6 +261,14 @@ MUC_GIAM VARCHAR(100),
 TRANG_THAI BIT,
 DIEU_KIEN_KHUYEN_MAI NVARCHAR(255),
 )
+----SỬA CHỮA------
+ALTER TABLE Voucher
+ADD MA_AP_DUNG VARCHAR(50);
+ALTER TABLE Voucher
+	ADD Loai Bit;
+	ALTER TABLE Voucher
+	ADD So_Luong Nvarchar(10);
+------------------
 GO
 IF OBJECT_ID('HOA_DON_VOUCHER') IS NOT NULL
 DROP TABLE HOA_DON_VOUCHER
@@ -333,6 +341,5 @@ VALUES (N'Lỗi sản phẩm A', 'Error1', 1, 1),
 INSERT INTO VOUCHER (MA_KHUYEN_MAI, MO_MA, TEN_KHUYEN_MAI, NGAY_BAT_DAU, NGAY_KET_THUC, MUC_GIAM, TRANG_THAI, DIEU_KIEN_KHUYEN_MAI)
 VALUES ('VOUCHER001', 'Voucher1', N'Giảm giá 10%', GETDATE(), DATEADD(MONTH, 1, GETDATE()), '10%', 1, N'Áp dụng cho đơn hàng trên 500,000 đồng'),
        ('VOUCHER002', 'Voucher2', N'Giảm giá 20%', GETDATE(), DATEADD(MONTH, 1, GETDATE()), '20%', 1, N'Áp dụng cho đơn hàng trên 1,000,000 đồng');
-
-
-	   select * from THUONG_HIEU
+	
+	SELECT * FROM VOUCHER
