@@ -1,6 +1,10 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+<<<<<<< HEAD
+=======
+import jakarta.validation.constraints.NotBlank;
+>>>>>>> thuoctinhsanpham
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,9 +22,18 @@ public class MauSac {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+<<<<<<< HEAD
   @Column(name = "MA_MAU_SAC")
     private String ma_mau_sac;
     @Column(name = "TEN_MAU_SAC")
+=======
+    @Column(name = "MA_MAU_SAC")
+    @NotBlank(message="Chua nhap ma")
+    private String ma_mau_sac;
+
+    @Column(name = "TEN_MAU_SAC")
+    @NotBlank(message="Chua nhap ten")
+>>>>>>> thuoctinhsanpham
     private String ten_mau_sac;
     @Column(name = "NGAY_TAO")
     private LocalDate ngay_tao;

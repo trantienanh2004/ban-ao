@@ -63,6 +63,11 @@ public class SanPhamController {
     public String spct(Model model){
         return "redirect:/sanpham/formSPCT";
     }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> thuoctinhsanpham
     @PostMapping("update")
     public String update(SanPham sp){
         sanPhamService.update(sp);
