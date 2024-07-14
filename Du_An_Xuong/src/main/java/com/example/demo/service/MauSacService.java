@@ -20,8 +20,7 @@ public class MauSacService {
     public List<MauSac> listtheoid(List<Integer> id){
         return mauSacRepository.findAllById(id);
     }
-<<<<<<< HEAD
-=======
+
 
     public MauSac findById(Integer id){return mauSacRepository.findById(id).get();}
 
@@ -41,5 +40,5 @@ public class MauSacService {
     public MauSac findByCode(String code){return mauSacRepository.findMauSacByMa_mau_sac(code);}
 
     public void deleteMauSac(Integer id){mauSacRepository.deleteById(id);}
->>>>>>> thuoctinhsanpham
+
 }
