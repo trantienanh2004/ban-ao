@@ -8,63 +8,143 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/images/style.css">
 </head>
 <body class="container">
+<!--    Them moi-->
+<div th:if="${message}" class="alert alert-success" role="alert" style="text-align: center">
+    <p th:text="${message}"></p>
+</div>
+<div style="height: 350px;width: auto;" class="mb-5 border border-3">
+    <form th:if="${nv.id == null}" th:action="@{/nhanvien/create}" method="post" th:object="${nv}">
+        <div class="row ">
+            <h3>Thêm mới nhân viên</h3>
+            <input type="hidden" th:field="*{id}">
+            <div class="col" id="coll">
+                <lable>Mã Nhân viên</lable>
+                <input type="text" class="form-control" th:field="*{maNhanVien}">
+                <b th:errors="*{maNhanVien}" style="color: red"/>
+                <br>
+                <lable>Tên Nhân viên</lable>
+                <input type="text" class="form-control" th:field="*{tenNhanVien}">
+                <b th:errors="*{tenNhanVien}" style="color: red"/>
+                <br>
+                <lable>Chức vụ</lable>
+                <br>
+                <input type="radio" class="form-check-input" value="true" th:field="*{chucVu}">Admin <br>
+                <input type="radio" class="form-check-input" value="false" th:field="*{chucVu}">Nhân viên
+                <br>
+                <b th:errors="*{chucVu}" style="color: red"/>
+                <br>
+            </div>
+            <div class="col" id="coll">
+                <lable>Tài khoản</lable>
+                <input type="text" class="form-control" th:field="*{tenTaiKhoan}">
+                <b th:errors="*{tenTaiKhoan}" style="color: red"/>
+                <br>
+                <lable>Mật khẩu</lable>
+                <input type="text" class="form-control" th:field="*{matKhau}">
+                <b th:errors="*{matKhau}" style="color: red"/>
+                <br>
+            </div>
+        </div>
+        <div style="text-align: center">
+            <button class="btn btn-primary" type="submit">Lưu</button>
+        </div>
+
+    </form>
+
+    <form th:unless="${nv.id == null}" th:action="@{/nhanvien/update}" method="post" th:object="${nv}">
+        <div class="row ">
+            <h3>Thêm mới nhân viên</h3>
+            <input type="hidden" th:field="*{id}">
+            <div class="col" id="coll">
+                <lable>Mã Nhân viên</lable>
+                <input type="text" class="form-control" th:field="*{maNhanVien}">
+                <b th:errors="*{maNhanVien}" style="color: red"/>
+                <br>
+                <lable>Tên Nhân viên</lable>
+                <input type="text" class="form-control" th:field="*{tenNhanVien}">
+                <b th:errors="*{tenNhanVien}" style="color: red"/>
+                <br>
+                <lable>Chức vụ</lable>
+                <br>
+                <input type="radio" class="form-check-input" th:value="true" th:field="*{chucVu}">Admin <br>
+                <input type="radio" class="form-check-input" th:value="false" th:field="*{chucVu}">Nhân viên
+            </div>
+            <div class="col" id="coll">
+                <lable>Tài khoản</lable>
+                <input type="text" class="form-control" th:field="*{tenTaiKhoan}">
+                <b th:errors="*{tenTaiKhoan}" style="color: red"/>
+                <br>
+                <lable>Mật khẩu</lable>
+                <input type="text" class="form-control" th:field="*{matKhau}">
+                <b th:errors="*{matKhau}" style="color: red"/>
+                <br>
+            </div>
+        </div>
+        <div style="text-align: center">
+            <button class="btn btn-primary" type="submit">Lưu</button>
+        </div>
+
+    </form>
+</div>
 
 <!--Danh Sach -->
-    <div class="card">
-        <div class="header">Danh sách nhân viên</div>
-        <div class="body">
-            <table class="table table-striped">
-                <thead>
-                <th>#</th>
-                <th>Tên nhân viên</th>
-                <th>Mã nhân viên</th>
-                <th>Tài khoản</th>
-                <th>Mật khẩu</th>
-                <th>Ngày tạo</th>
-                <th>Ngày sửa</th>
-                <th>Chức vụ</th>
-                <th>Trạng thái</th>
-                <th colspan="2">Chức năng</th>
-                </thead>
-                <tbody>
-                    <tr th:each="nv, index:${list}">
-                        <td th:text="${index+1}"></td>
-                        <td th:text="*{tenNhanVien}"></td>
-                        <td th:text="*{maNhanVien}"></td>
-                        <td th:text="*{tenTaiKhoan}"></td>
-                        <td th:text="*{chucVu}?'Admin':'Nhân viên'"></td>
-                        <td th:text="*{ngayTao}"></td>
-                        <td th:text="*{ngaySua}"></td>
-                        <td th:text="*{trangThai}?'Đang hoạt động':'Không hoạt động'"></td>
-                        <td>
-                            <a href="#">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
-                                     stroke="yellow" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                     class="feather feather-edit">
-                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                                </svg>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                     stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                     class="feather feather-trash-2">
-                                    <polyline points="3 6 5 6 21 6"></polyline>
-                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                    <line x1="10" y1="11" x2="10" y2="17"></line>
-                                    <line x1="14" y1="11" x2="14" y2="17"></line>
-                                </svg>
-                            </a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+<div class="card border border-3">
+    <div class="header">Danh sách nhân viên</div>
+    <div class="body">
+        <table class="table table-striped">
+            <thead>
+            <th>#</th>
+            <!--                <th hidden>stt</th>-->
+            <th>Mã nhân viên</th>
+            <th>Tên nhân viên</th>
+            <th>Tài khoản</th>
+            <th>Mật khẩu</th>
+            <th>Chức vụ</th>
+            <th>Ngày tạo</th>
+            <th>Ngày sửa</th>
+            <th>Trạng thái</th>
+            <th colspan="2">Chức năng</th>
+            </thead>
+            <tbody>
+            <tr th:each="nv, index:${list}">
+                <th th:text="${index.index+1}"></th>
+                <!--                        <th hidden  th:text="${nv.id}"></th>-->
+                <th th:text="${nv.maNhanVien}"></th>
+                <th th:text="${nv.tenNhanVien}"></th>
+                <th th:text="${nv.tenTaiKhoan}"></th>
+                <th th:text="${nv.matKhau}"></th>
+                <th th:text="${nv.chucVu}?'Admin':'Nhân viên'"></th>
+                <th th:text="${nv.ngayTao}"></th>
+                <th th:text="${nv.ngaySua}"></th>
+                <th th:text="${nv.trangThai}?'Còn làm việc':'Đã nghỉ việc'"></th>
+                <th>
+                    <a th:href="@{|/nhanvien/edit/${nv.id}|}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                             stroke="yellow" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                             class="feather feather-edit">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                        </svg>
+                    </a>
+                </th>
+                <th>
+                    <a th:href="@{|/nhanvien/delete/${nv.id}|}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+                             class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                  d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z"/>
+                            <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466"/>
+                        </svg>
+                    </a>
+                </th>
+            </tr>
+            </tbody>
+        </table>
     </div>
+</div>
 
 </body>
 </html>

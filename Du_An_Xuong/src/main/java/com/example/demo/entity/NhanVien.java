@@ -1,6 +1,8 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,18 +23,23 @@ public class NhanVien {
     private Integer id;
 
     @Column(name = "ten_nhan_vien")
+    @NotBlank(message = "Chưa nhập tên nhân viên")
     private String tenNhanVien;
 
     @Column(name = "ma_nhan_vien")
+    @NotBlank(message = "Chưa nhập mã nhân viên")
     private String maNhanVien;
 
     @Column(name = "ten_tai_khoan")
+    @NotBlank(message = "Chưa nhập tài khoản nhân viên")
     private String tenTaiKhoan;
 
     @Column(name = "mat_khau")
+    @NotBlank(message = "Chưa nhập mật khẩu nhân viên")
     private String matKhau;
 
     @Column(name = "chuc_vu")
+    @NotNull(message = "Chưa chọn chức vụ")
     private Boolean chucVu;
 
     @Column(name = "ngay_tao")
