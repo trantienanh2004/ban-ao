@@ -10,7 +10,7 @@ public class TrangChu {
 
     @GetMapping("/SanPham")
     public String product_san_pham() {
-        return "View/SanPham";
+        return "redirect:/sanpham/hienthi";
     }
     @GetMapping("/CoAo")
     public String product_co_ao() {

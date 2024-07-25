@@ -20,6 +20,9 @@ public class SanPham {
     @Column(name = "MA_SAN_PHAM")
     private String masp;
 
+    @Column(name = "Trang_thai")
+    private boolean trangthai;
+
     @Column(name = "TEN_SAN_PHAM")
     private String tensp;
 

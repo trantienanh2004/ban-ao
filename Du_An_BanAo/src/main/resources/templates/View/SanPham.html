@@ -69,21 +69,23 @@
             <th>Số Lượng</th>
             <th>Danh Mục</th>
             <th>Cổ Áo</th>
+            <th>thương hiệu</th>
             <th>Ảnh</th>
             <th>Trạng Thái</th>
             <th>Thao tác</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>1</td>
-            <td>1</td>
-            <td>1</td>
-            <td>1</td>
-            <td>1</td>
-            <td>1</td>
-            <td>1</td>
-            <td>1</td>
+        <tr th:each="SanPham,i : ${listSP} ">
+            <td th:text="${i.index}">stt </td>
+            <td th:text="${SanPham.masp}">stt </td>
+            <td th:text="${SanPham.tensp}">stt </td>
+            <td th:text="${SanPham.soluongsp}">stt </td>
+            <td th:text="${SanPham.danhMuc.tendanhmuc}">stt </td>
+            <td th:text="${SanPham.coAo.ten}">stt </td>
+            <td th:text="${SanPham.thuongHieu.tenthuonghieu}">stt </td>
+            <td th:text="${SanPham.anhsp}">stt </td>
+            <td th:text="${SanPham.trangthai ? 'hoạt động' : 'không hoạt động'}">stt </td>
             <td>
                 <a type="button" data-bs-toggle="modal" data-bs-target="#update">
                     <i class="fa-regular fa-pen-to-square" style="color: #000000;font-size: 25px"></i>

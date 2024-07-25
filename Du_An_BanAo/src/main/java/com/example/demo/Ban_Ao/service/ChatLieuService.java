@@ -13,7 +13,10 @@ public class ChatLieuService {
     ChatLieuRepository chatLieuRepository;
 
 
-public List<ChatLieu> ListChatlieu(){
-    return chatLieuRepository.findAll();
-}
+    public List<ChatLieu> ListChatlieu(){
+        return chatLieuRepository.findAll();
+    }
+    public ChatLieu timtheoid(int id){
+        return chatLieuRepository.findById(id).get();
+    }
 }

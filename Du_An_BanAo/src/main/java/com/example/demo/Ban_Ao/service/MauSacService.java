@@ -19,4 +19,7 @@ public class MauSacService {
     public List<MauSac> listtheoid(List<Integer> id){
         return mauSacRepository.findAllById(id);
     }
+    public MauSac timtheoid(int id){
+        return mauSacRepository.findById(id).get();
+    }
 }
