@@ -31,6 +31,7 @@ public class SanPhamController {
     public String hienthisp(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
         model.addAttribute("listSP", sanPhamService.getAllByPage(page));
         return "View/SanPham";
+
     }
 
 }

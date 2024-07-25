@@ -29,7 +29,7 @@ public class SanPhamChiTietComtroller {
 
     @GetMapping("/back")
     public String back(){
-        return "/View/SanPham";
+        return "/QLSP/SanPham";
     }
     @GetMapping("/HienThi")
     public String spct(Model model, @RequestParam(name = "x", defaultValue = "0") int x){

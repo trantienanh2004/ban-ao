@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{/TrangChu::dynamic(~{::body})}">
 <head>
     <meta charset="UTF-8">
     <title>Cổ áo</title>
@@ -14,62 +14,47 @@
             crossorigin="anonymous"></script>
 
 </head>
-<body class="container">
-<header>
-    <h1>Hi</h1>
-    <h1>Cổ áo</h1>
-    <div style="text-align: right">
-        <button type="button" class="btn btn-success " data-bs-toggle="modal" data-bs-target="#add">
-            <i class="fa-solid fa-plus" style="color: #fcfcfc;"></i>
-            Thêm cổ áo
-        </button>
-    </div>
-    <form class="row g-3" th:action="@{/CoAo/Add}" th:object="${CoAo}" th:method="post">
-        <div class="col-md-6">
-            <label class="form-label">*Mã cổ áo</label>
-            <input type="text" th:field="*{ma}" class="form-control" placeholder="Mã cổ áo">
-            <span th:if="${#fields.hasErrors('ma')}" th:errors="*{ma}" style="color: red"></span>
-        </div>
-        <div class="col-md-6">
-            <label th:field="*{ten}" class="form-label">*Tên cổ áo</label>
-            <input type="text" class="form-control" placeholder="Tên cổ áo">
-            <span th:if="${#fields.hasErrors('ten')}" th:errors="*{ten}" style="color: red"></span>
-        </div>
-        <div class="col-md-12">
-            <label class="form-label">*Trạng thái</label><br>
-            <input type="radio" th:field="*{trangthai}" th:value="1"> Còn Hàng
-            <input type="radio" th:field="*{trangthai}" th:value="0"> Hết Hàng
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Add</button>
-        </div>
-    </form>
-    <div class="card text-bg-light" style="height: 100px; top:50px ">
-        <div class="row" style="padding-left: 50px; padding-top:25px">
-            <div class="col-md-2">
-                <h3>Bộ lọc:</h3>
-            </div>
-            <div class="col-md-4" style="padding-right: 50px;">
-                <input type="text" class="form-control" placeholder="Tên cổ áo">
-            </div>
-            <div class="col-md-3">
-                <select id="inputState" class="form-select">
-                    <option selected>Trạng thái...</option>
-                    <option>...</option>
-                </select>
-            </div>
-            <div class="col-md-3 ">
-                <button class="btn active"><i class="fa-solid fa-rotate-right" style="color: #000000;"></i> Làm mới
-                </button>
-            </div>
-        </div>
-    </div>
-</header>
+<body class="container" th:fragment="CoAo">
+<h1 class="text-danger text-center">Cổ áo</h1>
+<div style="text-align: right">
+    <button type="button" class="btn btn-success " data-bs-toggle="modal" data-bs-target="#add">
+        <i class="fa-solid fa-plus" style="color: #fcfcfc;"></i>
+    </button>
+</div>
 
-<div class="card text-bg-light" style="top: 100px">
+<div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded" style="padding-top: 30px">
+    <div class="row" style="padding-left: 50px; padding-top:15px">
+        <div class="col-md-2">
+            <h3 class="text-primary">Bộ lọc:</h3>
+        </div>
+        <div class="col-md-3" style="padding-right: 50px;">
+            <form th:action="@{/CoAo/search}" method="get">
+                <input type="text" class="form-control border-primary" name="key" placeholder="Tên cổ áo...">
+            </form>
+        </div>
+        <div class="col-md-3">
+            <select id="inputState" class="form-select border-primary">
+                <option selected>Trạng thái...</option>
+                <option>...</option>
+            </select>
+        </div>
+        <div class="col-md-2 ">
+            <a>
+                <button type="button" class="btn btn-outline-primary"><i class="fa-solid fa-magnifying-glass"
+                                                                         style="color: #000000;"></i>Tìm
+                </button>
+            </a>
+            <a th:href="@{/Voucher/back}">
+                <button type="button" class="btn btn-outline-primary"><i class="fa-solid fa-rotate-right"
+                                                                         style="color: #000000;"></i>Mới
+                </button>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="shadow p-3 mb-5 bg-body-tertiary rounded">
     <table th:if="${listca}" class="table " style="padding-top:150px">
-        <thead>
+        <thead class="table-primary">
         <tr>
             <th>STT</th>
             <th>Mã Cổ Áo</th>
@@ -80,7 +65,7 @@
             <th>Thao tác</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody class="table-group-divider ">
         <tr th:each="co,i: ${listca}">
             <td th:text="${i.count}"></td>
             <td th:text="${co.ma}"></td>
@@ -89,17 +74,37 @@
             <td th:text="${co.ngaysua}"></td>
             <td th:text="${co.trangthai == true ? 'Còn hàng' : 'Hết hàng' }"></td>
             <td>
-                <a type="button" data-bs-toggle="modal" data-bs-target="#update"><i class="fa-regular fa-pen-to-square"
-                                                                                    style="color: #000000;font-size: 25px"></i></a>
-                <i class="fa-solid fa-trash-can" style="color: #000000;font-size: 25px"></i>
+                <a th:href="@{/CoAo/Update/{id} (id=${co.id})}">
+                    <i class="fa-regular fa-pen-to-square" style="color: #000000;font-size: 25px"></i>
+                </a>
+                <a th:href="@{/CoAo/remove/{id} (id=${co.id})}">
+                    <i class="fa-solid fa-trash-can" style="color: #000000;font-size: 25px"></i>
+                </a>
             </td>
         </tr>
         </tbody>
     </table>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:if="${currentPage > 1}">
+                <a class="page-link" href="#" th:href="@{'?pageNo='+${currentPage-1}}" aria-label="Previous">
+                    <span aria-hidden="true"> << </span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#" th:text="${currentPage}" disabled></a>
+            </li>
+            <li class="page-item" th:if="${currentPage < totalPage}">
+                <a th:href="@{'?pageNo='+${currentPage+1}}" class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true"> >> </span>
+                </a>
+            </li>
+        </ul>
+    </nav>
 </div>
 <!-- add  -->
 <div class="modal fade" id="add" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" style="color: red">Thêm Cổ Áo</h1>
@@ -109,28 +114,31 @@
                 <form class="row g-3" th:action="@{/CoAo/Add}" th:object="${CoAo}" th:method="post">
                     <div class="col-md-6">
                         <label class="form-label">*Mã cổ áo</label>
-                        <input type="text" th:field="*{ma}" class="form-control" placeholder="Mã cổ áo">
-                        <span th:if="${#fields.hasErrors('ma')}" th:errors="*{ma}"></span>
+                        <input type="text" th:field="*{ma}" class="form-control"
+                               placeholder="Mã cổ áo" required>
                     </div>
                     <div class="col-md-6">
-                        <label th:field="*{ten}" class="form-label">*Tên cổ áo</label>
-                        <input type="text" class="form-control" placeholder="Tên cổ áo">
-                        <span th:if="${#fields.hasErrors('ten')}" th:errors="*{ten}"></span>
+                        <label class="form-label">*Tên cổ áo</label>
+                        <input type="text" th:field="*{ten}" class="form-control"
+                               placeholder="Tên cổ áo" required>
                     </div>
                     <div class="col-md-12">
                         <label class="form-label">*Trạng thái</label><br>
-                        <input type="radio" th:field="*{trangthai}" th:value="true" checked> Còn Hàng
-                        <input type="radio" th:field="*{trangthai}" th:value="false"> Hết Hàng
+                        <input type="radio" th:field="*{trangthai}" th:value="true"
+                               checked>Con Hang
+                        <input type="radio" th:field="*{trangthai}" th:value="false">Het
+                        Hang
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Add</button>
+                    <div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-</div>
 </div>
 <!-- update  -->
 <div class="modal fade" id="update" tabindex="1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -141,21 +149,25 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="row g-3">
+                <p th:text="${modal}"></p>
+                <form class="row g-3" th:action="@{/CoAo/Update}" th:object="${CoAo}" th:method="post">
+                    <input type="text" th:field="*{id}" class="form-control" hidden>
                     <div class="col-md-6">
                         <label class="form-label">*Mã cổ áo</label>
-                        <input type="text" class="form-control" placeholder="Mã cổ áo">
+                        <input type="text" th:field="*{ma}" class="form-control"
+                               placeholder="Mã cổ áo" required>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">*Tên cổ áo</label>
-                        <input type="text" class="form-control" placeholder="Tên cổ áo">
+                        <input type="text" th:field="*{ten}" class="form-control"
+                               placeholder="Tên cổ áo" required>
                     </div>
                     <div class="col-md-12">
-                        <label class="form-label">*Trạng thái</label>
-                        <select class="form-select">
-                            <option selected>Trạng thái...</option>
-                            <option>...</option>
-                        </select>
+                        <label class="form-label">*Trạng thái</label><br>
+                        <input type="radio" th:field="*{trangthai}" th:value="true"
+                               checked>Con Hang
+                        <input type="radio" th:field="*{trangthai}" th:value="false">Het
+                        Hang
                     </div>
                 </form>
             </div>
@@ -167,17 +179,20 @@
     </div>
 </div>
 </div>
+<!--<label for="exampleDataList" class="form-label">Datalist example</label>-->
+<!--<input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search...">-->
+<!--<datalist id="datalistOptions">-->
+<!--    <option value="San Francisco">-->
+<!--    <option value="New York">-->
+<!--    <option value="Seattle">-->
+<!--    <option value="Los Angeles">-->
+<!--    <option value="Chicago">-->
+<!--</datalist>-->
 
-<div style="padding-top: 150px">
-    <ul class="pagination">
-        <li th:if="${currentPage > 1}">
-            <a th:href="@{'?pageNumber='+${currentPage-1}}"> << </a>
-        </li>
-        <li th:text="${currentPage}"></li>
-        <li th:if="${currentPage < totalPage}">
-            <a th:href="@{'?pageNumber='+${currentPage+1}}"> >> </a>
-        </li>
-    </ul>
-</div>
+<!--@Email(message = "Khong dung dinh dang email")-->
+
+<!--@Max(value = 10, message = "Diem k the tren 10 ")-->
+
+<!--@PositiveOrZero(message = "Diem k the am ")-->
 </body>
 </html>
