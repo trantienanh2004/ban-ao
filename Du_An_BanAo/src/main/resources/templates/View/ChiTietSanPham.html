@@ -59,22 +59,6 @@
     <div class="card text-bg-light" style="height: 150px; top:50px; margin-top: -25px ">
         <div class="row" style="padding-left: 50px; padding-top:25px">
             <div class="col-md-2">
-                <h4>Chất liệu:</h4>
-            </div>
-            <div class="col-md-8">
-                <select class="form-select select2" name="chatlieuid">
-                    <option th:each="cl : ${chatlieuList}" th:value="${cl.id}" th:text="${cl.ten_chat_lieu}"></option>
-                </select>
-            </div>
-            <div class="col-md-1" >
-                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#addcl">
-                    <i class="fa-solid fa-circle-plus" style="color: #000000;font-size: 30px"></i>
-                </button>
-            </div>
-        </div>
-
-        <div class="row" style="padding-left: 50px; padding-top:25px">
-            <div class="col-md-2">
                 <h4>Kích thước:</h4>
             </div>
             <div class="col-md-3">
@@ -106,8 +90,8 @@
     </div>
     </form>
 </header>
-<h2 style="text-align: center; padding-top: 70px">sản phẩm trờ</h2>
-<a th:href="@{/ChiTietSanPham/addSPCT}">add</a>
+<h2 style="text-align: center; padding-top: 70px">sản phẩm chờ</h2>
+<a th:href="@{/ChiTietSanPham/addSPCT}" class="btn btn-info">add</a>
 <div class="card text-bg-light" style="top: 100px; margin-top: -75px">
     <table class="table " style="padding-top:150px">
         <thead>
@@ -116,7 +100,6 @@
             <th>Tên sản phẩm</th>
             <th>Kích thước</th>
             <th>màu sắc</th>
-            <th>chất liệu</th>
             <th>giá</th>
             <th>Số lượng</th>
             <th>Ảnh</th>
@@ -129,14 +112,13 @@
             <td th:text="${spct.sanPham.tensp}">1</td>
             <td th:text="${spct.kichThuoc.ten_kich_thuoc}">1</td>
             <td th:text="${spct.mauSac.ten_mau_sac}">1</td>
-            <td th:text="${spct.chatLieu.ten_chat_lieu}">1</td>
             <td th:text="${spct.don_gia}">1</td>
             <td th:text="${spct.so_luong_san_pham}">1</td>
-<!--            <td><img th:src="@{/images/ + ${spct.anh_san_pham_chi_tiet}}" alt="Ảnh sản phẩm" /></td>-->
+            <!--            <td><img th:src="@{/images/ + ${spct.anh_san_pham_chi_tiet}}" alt="Ảnh sản phẩm" /></td>-->
             <td th:text="${spct.anh_san_pham_chi_tiet}">1</td>
             <td>
-                <a type="button" data-bs-toggle="modal" data-bs-target="#update">
-                    <i class="fa-solid fa-trash-can" style="color: #000000;font-size: 25px"></i>
+                <a th:href="@{/ChiTietSanPham/xoathanhtro(id=${spct.id})}" class="btn btn-danger">
+                    <i class="fa-solid fa-trash-can" style="color: #000000; font-size: 25px"></i>
                 </a>
             </td>
         </tr>
@@ -144,7 +126,7 @@
     </table>
 </div>
 
-<h2 style="text-align: center; padding-top: 130px">Sản phẩm với thuộc tính màu sắc</h2>
+<h2 style="text-align: center; padding-top: 130px">Sản phẩm chi tiết</h2>
 <div class="card text-bg-light" style="top: 100px; margin-top: -75px">
     <table class="table " style="padding-top:150px">
         <thead>
@@ -153,7 +135,6 @@
             <th>Tên sản phẩm</th>
             <th>Kích thước</th>
             <th>màu sắc</th>
-            <th>chất liệu</th>
             <th>giá</th>
             <th>Số lượng</th>
             <th>Ảnh</th>
@@ -166,7 +147,6 @@
             <td th:text="${spct.sanPham.tensp}">1</td>
             <td th:text="${spct.kichThuoc.ten_kich_thuoc}">1</td>
             <td th:text="${spct.mauSac.ten_mau_sac}">1</td>
-            <td th:text="${spct.chatLieu.ten_chat_lieu}">1</td>
             <td th:text="${spct.don_gia}">1</td>
             <td th:text="${spct.so_luong_san_pham}">1</td>
             <!-- chưa có chỗ để ảnh    <td><img th:src="@{/images/ + ${spct.anh_san_pham_chi_tiet}}" alt="Ảnh sản phẩm" /></td>-->
@@ -179,6 +159,32 @@
         </tr>
         </tbody>
     </table>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                <a class="page-link" th:href="@{/ChiTietSanPham/HienThi}">Về đầu</a>
+            </li>
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">...</a>
+            </li>
+            <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                <a class="page-link" th:href="@{/ChiTietSanPham/HienThi(x=${currentPage - 1})}">&lt;&lt;&lt;</a>
+            </li>
+            <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}" th:classappend="${i == currentPage} ? 'active'">
+                <a class="page-link" th:href="@{/ChiTietSanPham/HienThi(x=${i})}" th:text="${i + 1}">1</a>
+            </li>
+            <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+                <a class="page-link" th:href="@{/ChiTietSanPham/HienThi(x=${currentPage + 1})}">&gt;&gt;&gt;</a>
+            </li>
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">...</a>
+            </li>
+            <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+                <a class="page-link" th:href="@{/ChiTietSanPham/HienThi(x=${totalPages - 1})}" th:text="${totalPages}">Cuối</a>
+            </li>
+        </ul>
+    </nav>
+
 </div>
 
 <!-- Add Modal Contents for Chất Liệu, Kích Thước, Màu Sắc -->

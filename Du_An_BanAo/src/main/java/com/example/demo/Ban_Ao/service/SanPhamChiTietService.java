@@ -20,7 +20,7 @@ SanPhamChiTietRepository sanPhamChiTietRepository;
 
     public List<SanPhamChiTiet> SPCT_de_tam = new ArrayList<>();
 
-    public int size = 2;
+    public int size = 5;
   public Page<SanPhamChiTiet> sanPhamChiTietPage (int x){
       Sort s = Sort.by(Sort.Direction.ASC,"id");
       Pageable page = PageRequest.of(x,size,s);
@@ -31,5 +31,8 @@ SanPhamChiTietRepository sanPhamChiTietRepository;
    }
  public List<SanPhamChiTiet> SPCT (){
       return sanPhamChiTietRepository.findAll();
+ }
+ public void addspct (SanPhamChiTiet spct){
+      sanPhamChiTietRepository.save(spct);
  }
 }

@@ -44,9 +44,7 @@ public class SanPhamChiTiet {
     @OneToOne
     @JoinColumn(name = "ID_MAU_SAC")
     private MauSac mauSac;
-    @OneToOne
-    @JoinColumn(name = "ID_CHAT_LIEU")
-    private ChatLieu chatLieu;
+
 
 
 

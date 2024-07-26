@@ -6,6 +6,7 @@ import com.example.demo.Ban_Ao.entity.SanPhamChiTiet;
 import com.example.demo.Ban_Ao.service.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @Controller
@@ -37,33 +39,35 @@ public class SanPhamChiTietComtroller {
     }
 
     @GetMapping("/HienThi")
-    public String spct(Model model, @RequestParam(name = "x", defaultValue = "0") int x){
-        model.addAttribute("SanPhamChiTiet" ,new SanPhamChiTiet());
-        model.addAttribute("mauSacList",mauSacService.listMauSac());
+    public String spct(Model model, @RequestParam(name = "x", defaultValue = "0") int x) {
+        model.addAttribute("SanPhamChiTiet", new SanPhamChiTiet());
+        model.addAttribute("mauSacList", mauSacService.listMauSac());
         model.addAttribute("kichThuocList", kichThuocService.listKichThuoc());
-        model.addAttribute("chatlieuList",chatLieuService.ListChatlieu());
-        model.addAttribute("SanPhamChiTietList",sanPhamChiTietService.sanPhamChiTietPage(x));
-        model.addAttribute("listsanpham",sanPhamService.getAllsp());
 
-        // Thêm danh sách vào model để hiển thị trong view
+        Page<SanPhamChiTiet> sanPhamChiTietPage = sanPhamChiTietService.sanPhamChiTietPage(x);
+        model.addAttribute("SanPhamChiTietList", sanPhamChiTietPage.getContent());
+        model.addAttribute("currentPage", x);
+        model.addAttribute("totalPages", sanPhamChiTietPage.getTotalPages());
+
+        model.addAttribute("listsanpham", sanPhamService.getAllsp());
         model.addAttribute("spdt", sanPhamChiTietlist);
 
-        return "/View/ChiTietSanPham";
+        return "View/ChiTietSanPham";
     }
+
 
     @PostMapping("sanphamdetam")
     public String sanphamdetam(Model model,
                                @RequestParam("sanphamid") int sanphamid,
-                               @RequestParam("chatlieuid") int chatlieuid,
                                @RequestParam("kichThuocIds") List<Integer> kichThuocIds,
                                @RequestParam("mauSacIds") List<Integer> mauSacIds) {
         
         boolean exists = sanPhamChiTietlist.stream().anyMatch(s -> {
             boolean isSameProduct = s.getSanPham().getId() == sanphamid;
-            boolean isSamechatlieugigido = s.getChatLieu().getId() == chatlieuid;
+
             boolean hasSameKichThuoc = kichThuocIds.contains(s.getKichThuoc().getId());
             boolean hasSameMauSac = mauSacIds.contains(s.getMauSac().getId());
-            return isSameProduct && hasSameKichThuoc && hasSameMauSac && isSamechatlieugigido;
+            return isSameProduct && hasSameKichThuoc && hasSameMauSac ;
         });
         if (!exists) {
             for (Integer kichThuocId : kichThuocIds) {
@@ -73,7 +77,7 @@ public class SanPhamChiTietComtroller {
                     newSpct.setAnh_san_pham_chi_tiet(null);
                     newSpct.setDon_gia(1000.0);
                     newSpct.setSo_luong_san_pham(1);
-                    newSpct.setChatLieu(chatLieuService.timtheoid(chatlieuid));
+
                     newSpct.setNgay_tao(LocalDate.now());
                     newSpct.setSanPham(sanPhamService.getOnesp(sanphamid));
                     if (kichThuocId != null) {
@@ -92,13 +96,39 @@ public class SanPhamChiTietComtroller {
 
         return "redirect:/ChiTietSanPham/HienThi";
     }
-@GetMapping("addSPCT")
-    public String addSPCT(){
-    for (SanPhamChiTiet spctadd: sanPhamChiTietlist ) {
+    @GetMapping("addSPCT")
+    public String addSPCT() {
+        for (SanPhamChiTiet spctadd : sanPhamChiTietlist) {
+            Optional<SanPhamChiTiet> existingProduct = sanPhamChiTietService.SPCT().stream().filter(s -> {
+                boolean isSameProduct = s.getSanPham().getId() == spctadd.getSanPham().getId();
+                boolean hasSameKichThuoc = spctadd.getKichThuoc().getId() == s.getKichThuoc().getId();
+                boolean hasSameMauSac = spctadd.getMauSac().getId() == s.getMauSac().getId();
+                return isSameProduct && hasSameKichThuoc && hasSameMauSac;
+            }).findFirst();
 
-
+            if (existingProduct.isPresent()) {
+                SanPhamChiTiet spct = existingProduct.get();
+                spct.setSo_luong_san_pham(spct.getSo_luong_san_pham() + spctadd.getSo_luong_san_pham());
+                sanPhamChiTietService.addspct(spct);
+            } else {
+                sanPhamChiTietService.addspct(spctadd);
+            }
+        }
+        sanPhamChiTietlist.clear();
+        return "redirect:/ChiTietSanPham/HienThi";
     }
-    sanPhamChiTietlist.clear();
-    return "redirect:/ChiTietSanPham/HienThi";
-}
+
+
+    @GetMapping("/xoathanhtro")
+    public String xoathanhtro( @RequestParam(name = "id") int x){
+        List<SanPhamChiTiet> detamthoihehe = new ArrayList<>();
+        for (int i = 0 ;i<sanPhamChiTietlist.size();i++) {
+            if(sanPhamChiTietlist.get(i).getId().equals(x)){
+                detamthoihehe.add(sanPhamChiTietlist.get(i));
+            }
+        }
+         sanPhamChiTietlist.removeAll(detamthoihehe);
+        return "redirect:/ChiTietSanPham/HienThi";
+    }
+
 }
