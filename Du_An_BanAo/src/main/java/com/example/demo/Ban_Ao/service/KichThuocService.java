@@ -19,7 +19,9 @@ public class KichThuocService {
     public List<KichThuoc> listtheoid(List<Integer> id){
         return kichThuocRepository.findAllById(id);
     }
+
     public KichThuoc timtheoid(int id){
         return kichThuocRepository.findById(id).get();
     }
+
 }

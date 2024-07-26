@@ -17,7 +17,6 @@ import java.util.List;
 public class SanPhamChiTietService {
 @Autowired
 SanPhamChiTietRepository sanPhamChiTietRepository;
-
     public List<SanPhamChiTiet> SPCT_de_tam = new ArrayList<>();
 
     public int size = 5;
@@ -35,4 +34,5 @@ SanPhamChiTietRepository sanPhamChiTietRepository;
  public void addspct (SanPhamChiTiet spct){
       sanPhamChiTietRepository.save(spct);
  }
+
 }

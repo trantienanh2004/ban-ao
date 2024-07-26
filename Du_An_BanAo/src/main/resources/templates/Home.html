@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{/TrangChu::dynamic(~{::body})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Trang Chủ</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/bd9b5e640d.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+            integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+            crossorigin="anonymous"></script>
+</head>
+<body class="container" th:fragment="Home">
+<div id="carouselExampleAutoplaying" class="carousel slide container" data-bs-ride="carousel">
+    <div class="carousel-inner" style="text-align: center">
+        <div class="carousel-item active" data-bs-interval="2000">
+            <img th:src="@{/Image/Ban2.png}" width="1000px" height="500px" alt="...">
+        </div>
+        <div class="carousel-item" data-bs-interval="2000">
+            <img th:src="@{/Image/Ban1.png}"width="1000px" height="500px" alt="...">
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
+            data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"
+            data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden" >Next</span>
+    </button>
+</div>
+<article>
+
+</article>
+<footer style="height: 200px; padding-top: 30px" >
+    <div class="card text-bg-light" style="height: 170px;">
+        <div class="row" style="padding-left:60px; padding-top: 10px">
+            <div class="col-md-2">
+                <h5>Về chúng tôi</h5>
+                <a>Giới thiệu</a><br>
+                <a>Hệ thống cửa hàng</a><br>
+                <a>Tin tức</a><br>
+            </div>
+            <div class="col-md-3">
+                <h5>Chính sách</h5>
+                <a>Chính sách vận chuyển</a><br>
+                <a>Chính sách đổi hàng</a><br>
+                <a>Quy định</a><br>
+                <a>Hình thức thanh toán</a><br>
+                <a>Chính sách bảo mật</a><br>
+            </div>
+            <div class="col-md-2">
+                <h5>Tư vấn</h5>
+                <a>Tư vấn chọn Size</a><br>
+                <a>Hỏi đáp</a><br>
+                <a>Câu hỏi thường gặp</a><br>
+            </div>
+            <div class="col-md-3 ]">
+                <h5>Liên hệ</h5>
+                <a><i class="fa-solid fa-phone" style="color: #000000;"></i> 0867242974</a><br>
+                <a><i class="fa-solid fa-envelope" style="color: #000000;"></i> FashionStyle123@gmail.com</a><br>
+                <a><i class="fa-brands fa-facebook" style="color: #000000;"></i> Fashion Style</a><br>
+                <a><i class="fa-brands fa-tiktok" style="color: #000000;"></i> FashionStyle</a><br>
+            </div>
+            <div class="col-md-2" style="text-align: right">
+                <img th:src="@{/Image/image 5.png}">
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

@@ -20,6 +20,7 @@ public class SanPham {
     @Column(name = "MA_SAN_PHAM")
     private String masp;
 
+
     @Column(name = "Trang_thai")
     private boolean trangthai;
 
@@ -53,7 +54,9 @@ public class SanPham {
     @ManyToOne
     @JoinColumn(name = "ID_CO_AO",referencedColumnName = "id")
     private CoAo coAo;
+
     @OneToOne
     @JoinColumn(name = "ID_CHAT_LIEU")
     private ChatLieu chatLieu;
+
 }

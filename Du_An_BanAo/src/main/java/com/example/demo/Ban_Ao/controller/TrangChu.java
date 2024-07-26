@@ -8,14 +8,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("TrangChu")
 public class TrangChu {
 
+
+
+    @GetMapping("/Home")
+    public String product_home() {
+        return "/Home";
+    }
+
     @GetMapping("/SanPham")
     public String product_san_pham() {
-        return "redirect:/sanpham/hienthi";
+        return "View/SanPham";
     }
+
+
     @GetMapping("/CoAo")
     public String product_co_ao() {
         return "redirect:/CoAo/HienThi";
     }
+
+
+    @GetMapping("/Voucher")
+    public String product_voucher() {
+        return "redirect:/Voucher/HienThi";
+    }
+
+
     @GetMapping("/MauSac")
     public String product_mau_sac() {
         return "View/MauSac";

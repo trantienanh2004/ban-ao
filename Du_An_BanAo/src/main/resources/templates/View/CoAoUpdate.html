@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{/TrangChu::dynamic(~{::body})}">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -12,33 +14,33 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
             integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
             crossorigin="anonymous"></script>
-
 </head>
-<body class="container">
-<header>
-    <h1 style="text-align: center; color: red">Sửa cổ áo</h1>
-    <form class="row g-3" th:action="@{/CoAo/Update}" th:object="${CoAo}" th:method="post">
-        <input type="text" th:field="*{id}" class="form-control" hidden>
-        <div class="col-md-6">
-            <label class="form-label">*Mã cổ áo</label>
-            <input type="text" th:field="*{ma}" class="form-control" placeholder="Mã cổ áo">
-            <span th:if="${#fields.hasErrors('ma')}" th:errors="*{ma}" style="color: red"></span>
-        </div>
-        <div class="col-md-6">
-            <label  class="form-label">*Tên cổ áo</label>
-            <input type="text" th:field="*{ten}" class="form-control" placeholder="Tên cổ áo">
-            <span th:if="${#fields.hasErrors('ten')}" th:errors="*{ten}" style="color: red"></span>
-        </div>
-        <div class="col-md-12">
-            <label class="form-label">*Trạng thái</label><br>
-            <input type="radio" th:field="*{trangthai}" th:value="1"> Còn Hàng
-            <input type="radio" th:field="*{trangthai}" th:value="0"> Hết Hàng
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Add</button>
-        </div>
-    </form>
-</header>
+<body class="container" th:fragment="CoAo">
+<h4 style="text-align: center; color: red">
+    Sửa Cổ Áo
+</h4>
+<form class="row g-3" th:action="@{/CoAo/Update}" th:object="${CoAo}" th:method="post">
+    <input type="text" th:field="*{id}" class="form-control" hidden>
+    <div class="col-md-6">
+        <label class="form-label"><a style="color: #ff0000">*</a>Mã cổ áo</label>
+        <input type="text" th:field="*{ma}" class="form-control" placeholder="Mã cổ áo" required>
+
+    </div>
+    <div class="col-md-6">
+        <label class="form-label"><a style="color: #ff0000">*</a>Tên cổ áo</label>
+        <input type="text" th:field="*{ten}" class="form-control" placeholder="Tên cổ áo" required>
+    </div>
+    <div class="col-md-12">
+        <label class="form-label"><a style="color: #ff0000">*</a>Trạng thái</label><br>
+        <input type="radio" th:field="*{trangthai}" th:value="1"> Còn Hàng
+        <input type="radio" th:field="*{trangthai}" th:value="0"> Hết Hàng
+    </div>
+    <div class="modal-footer">
+        <a th:href="@{/CoAo/back}">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Thoát</button>
+        </a>
+        <button type="submit" class="btn btn-primary">Sửa</button>
+    </div>
+</form>
 </body>
 </html>

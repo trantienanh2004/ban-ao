@@ -10,7 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/sanpham")
+
+@RequestMapping("/SanPham")
+
 public class SanPhamController {
     @Autowired
     SanPhamService sanPhamService;
@@ -27,10 +29,13 @@ public class SanPhamController {
     @Autowired
     KichThuocRepository kichThuocRepository;
     Sort sort = Sort.by(Sort.Direction.DESC,"id");
-    @GetMapping("/hienthi")
+
+    @GetMapping("/HienThi")
     public String hienthisp(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
         model.addAttribute("listSP", sanPhamService.getAllByPage(page));
         return "View/SanPham";
+
+
     }
 
 }

@@ -11,11 +11,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+
 
 @Controller
 @RequestMapping("/ChiTietSanPham")
@@ -30,6 +32,7 @@ public class SanPhamChiTietComtroller {
     SanPhamChiTietService sanPhamChiTietService;
     @Autowired
     SanPhamService sanPhamService;
+
 
     List<SanPhamChiTiet> sanPhamChiTietlist = new ArrayList<>();
 
@@ -130,5 +133,6 @@ public class SanPhamChiTietComtroller {
          sanPhamChiTietlist.removeAll(detamthoihehe);
         return "redirect:/ChiTietSanPham/HienThi";
     }
+
 
 }
