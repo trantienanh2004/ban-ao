@@ -32,7 +32,7 @@ public class Voucher {
     @Column(name = "MUC_GIAM")
     private String mucGiam;
 
-    @Column(name = "MO_TA")
+    @Column(name = "MO_MA")
     private String mota;
 
     @Column(name = "LOAI")

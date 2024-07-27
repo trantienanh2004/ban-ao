@@ -382,6 +382,8 @@ VALUES
 
 SELECT * FROM SAN_PHAM_CHI_TIET
  select * from THUONG_HIEU   
+select * from NHAN_VIEN
+select * from chuc_vu
   ALTER TABLE nhan_vien
 DROP COLUMN chuc_vu
   ALTER TABLE nhan_vien
