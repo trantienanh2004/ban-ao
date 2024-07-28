@@ -1,7 +1,7 @@
 package com.example.demo.Ban_Ao.service;
 
 import com.example.demo.Ban_Ao.entity.KichThuoc;
-import com.example.demo.Ban_Ao.repository.KichThuocRepository;
+import com.example.demo.Ban_Ao.repository.Kichthuocepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +11,7 @@ import java.util.List;
 public class KichThuocService {
 
     @Autowired
-    KichThuocRepository kichThuocRepository;
+    Kichthuocepository kichThuocRepository;
 
     public List<KichThuoc> listKichThuoc(){
         return kichThuocRepository.findAll();

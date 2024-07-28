@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/bd9b5e640d.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+            integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+            crossorigin="anonymous"></script>
+</head>
+<style>
+    .text {
+        font-weight: bold;
+        text-align: center;
+        justify-content: center;
+    }
+    .form{
+        /*text-align: center;*/
+        justify-content: center;
+        margin-top: 20px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: center;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    .pagination {
+        display: flex; /* Sử dụng flex để căn giữa các phần tử con */
+        justify-content: center; /* Căn giữa các phần tử con */
+        padding-left: 0;
+        list-style: none;
+    }
+    .page-link {
+        display: block;
+        color: #007bff;
+        text-decoration: none;
+        background-color: #fff;
+        border: 1px solid #dee2e6;
+    }
+</style>
+<body class="container">
+<div>
+    <form class="form" th:action="@{/hoadon/find}" th:object="${HoaDon}" method="get">
+        <span class="">Tìm kiếm hóa đơn :</span>
+        <input type="text" th:field="*{mahoadon}" id="mahoadon" style="width: 250px; height: 30px; border: 2px solid;
+         border-radius: 25px 25px 25px 25px;">
+        <button class="btn btn-success text" style="width: 60px;height: 35px;line-height: 17px;
+         border: 2px solid; border-radius: 25px 25px 25px 25px;">Tìm</button>
+
+        <input type="checkbox" style="margin-left: 200px" th:href="@{'/hoadon/detail?id=1'}"> <span class="text">Ngày hôm nay</span>
+    </form>
+    <div class="text" style="padding-top: 40px">
+        <span style="font-size: 25px;">Danh sách hóa đơn</span>
+        <div style="text-align: center" >
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+<!--                    <li class="page-item" th:if="${curren > 1}">-->
+<!--                        <a class="page-link" th:href="@{'/hoadon/hienthi?page='+${curren-1}}">Prev</a>-->
+<!--                    </li>-->
+                    <li class="page-item" th:each="i :${#numbers.sequence(1,lshoadon.totalPages)}">
+                        <a class="page-link" th:href="@{'/hoadon/hienthi?page='+${i-1}}" th:text="${i}"></a>
+                    </li >
+<!--                    <li class="page-item" th:if="${curren < total}">-->
+<!--                        <a class="page-link" th:href="@{'/hoadon/hienthi?page='+${curren+1}}">Next</a>-->
+<!--                    </li>-->
+                </ul>
+            </nav>
+        </div>
+        <table th:if="${lshoadon}" border="1" >
+            <thead class="text" style="font-size: 15px">
+            <tr>
+                <th>#</th>
+                <th>Mã HD</th>
+                <th>Tên khách hàng</th>
+                <th>Tên nhân viên</th>
+                <th>Ngày mua</th>
+                <th>Chi tiết</th>
+            </tr>
+            </thead>
+            <tbody style="font-size: 13px">
+            <tr th:each="hd,i :${lshoadon}">
+                <td th:text="${i.count}">  </td>
+                <td th:text="${hd.mahoadon}"></td>
+                <td th:text="${hd.khachHang.tenkhachhang}"></td>
+                <td th:text="${hd.nhanVien.tennhanvien}"></td>
+                <td th:text="${hd.ngaymua}"></td>
+                <td class="text" style="font-size: 20px">
+                   <a th:href="@{'/hoadon/detail?id='+${hd.id}}" style="color: black">
+                       <i class="fa-solid fa-circle-info"> </i></a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

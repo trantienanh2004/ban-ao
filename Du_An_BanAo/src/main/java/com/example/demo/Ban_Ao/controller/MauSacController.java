@@ -17,6 +17,6 @@ public class MauSacController {
     @GetMapping("/HienThi")
     public String ShowList(Model model){
         model.addAttribute("listMS", mauSacRepository.findAll());
-        return "/View/MauSac";
+        return "View/MauSac";
     }
 }

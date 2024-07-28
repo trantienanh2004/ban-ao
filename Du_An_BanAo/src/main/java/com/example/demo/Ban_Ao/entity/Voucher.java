@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Setter
@@ -46,10 +47,10 @@ public class Voucher {
     private String maApDung;
 
     @Column(name = "NGAY_BAT_DAU")
-    private Date ngaybatdau;
+    private LocalDate ngaybatdau;
 
     @Column(name = "NGAY_KET_THUC")
-    private Date ngayketthuc;
+    private LocalDate ngayketthuc;
 
     @Column(name = "TRANG_THAI")
     private boolean trangThai;

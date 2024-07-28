@@ -27,7 +27,7 @@ public class SanPhamController {
     @Autowired
     MauSacRepository mauSacRepository;
     @Autowired
-    KichThuocRepository kichThuocRepository;
+    Kichthuocepository kichThuocRepository;
     Sort sort = Sort.by(Sort.Direction.DESC,"id");
 
     @GetMapping("/HienThi")
