@@ -34,5 +34,8 @@ SanPhamChiTietRepository sanPhamChiTietRepository;
  public void addspct (SanPhamChiTiet spct){
       sanPhamChiTietRepository.save(spct);
  }
+ public void xoaspct(int id){
+      sanPhamChiTietRepository.deleteById(id);
+ }
 
 }

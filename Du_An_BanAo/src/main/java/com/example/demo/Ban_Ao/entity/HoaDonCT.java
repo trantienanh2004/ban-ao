@@ -25,23 +25,29 @@ public class HoaDonCT {
     private int soluong;
 
     @Column(name = "DON_GIA")
-    private BigDecimal dongia;
+    private double dongia;
 
     @Column(name = "NGAY_TAO")
     private LocalDate ngaytao;
 
     @Column(name = "TONG_TIEN")
-    private BigDecimal tongtien;
+    private double tongtien;
+
+    @Column(name = "TRANG_THAI")
+    private Integer trangthai;
 
     @Column(name = "HINH_THUC_THANH_TOAN")
     private String hinhthucthanhtoan;
 
     @ManyToOne
-    @JoinColumn(name = "ID_SAN_PHAM",referencedColumnName = "id")
-    private SanPham sanPham;
+    @JoinColumn(name = "ID_SAN_PHAM_CHI_TIET",referencedColumnName = "id")
+    private SanPhamChiTiet sanPhamChiTiet;
 
     @ManyToOne
     @JoinColumn(name = "ID_HOA_DON",referencedColumnName = "id")
     private HoaDon hoaDon;
 
+    @ManyToOne
+    @JoinColumn(name = "ID_NHAN_VIEN",referencedColumnName = "id")
+    private NhanVien nhanVien;
 }

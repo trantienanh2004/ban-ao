@@ -31,45 +31,47 @@
             </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
+                <tr th:each="hd,i : ${hoadon}" th:if="${hd.trangthai == 1}" >
+
+                    <td th:text="${i.index}">1</td>
+                    <td th:text="${hd.id}">1 </td>
+                    <td th:text="${hd.nhanVien.tennhanvien}">1</td>
+                    <td th:text="${hd.ngaytao}">1</td>
+                    <td th:text="${hd.trangthai == 1 ? 'chưa thanh toán' : 'đã tt'}">1</td>
                     <td>
-                        <a class="btn btn-primary">Chọn</a>
+                        <a class="btn btn-primary" th:href="@{/banhang/tronhd(id=${hd.id})}">Chọn</a>
                     </td>
                 </tr>
             </tbody>
         </table>
         <h2>Giỏ hàng</h2>
-        <table class="table">
+        <table class="table " style="padding-top:150px">
             <thead>
             <tr>
-                <td>STT</td>
-                <td>ID</td>
-                <td>Tên sản phẩm</td>
-                <td>Số lượng</td>
-                <td>Giá bán</td>
-                <td>Tổng tiền</td>
-                <td>Chức năng</td>
+                <th>STT</th>
+                <th>Tên sản phẩm</th>
+                <th>Kích thước</th>
+                <th>màu sắc</th>
+                <th>chất liệu</th>
+                <th>đơn giá</th>
+                <th>Số lượng sản phẩm</th>
+                <!--            <th>Ảnh</th>-->
+                <th>Thao tác</th>
             </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>
-                        <a class="btn btn-danger">
-                            Xóa
-                        </a>
-                    </td>
-                </tr>
+            <tr th:each="gio, i : ${giohang}" >
+                <td th:text="${i.index + 1}">1</td>
+                <td th:text="${gio.sanPhamChiTiet.sanPham.tensp}">1</td>
+                <td th:text="${gio.sanPhamChiTiet.kichThuoc.ten_kich_thuoc}">1</td>
+                <td th:text="${gio.sanPhamChiTiet.mauSac.ten_mau_sac}">1</td>
+                <td th:text="${gio.sanPhamChiTiet.sanPham.chatLieu.ten_chat_lieu}">1</td>
+                <td th:text="${gio.sanPhamChiTiet.don_gia}">1</td>
+                <td th:text="${gio.soluong}">1</td>
+                <td>
+                    <a th:href="@{/banhang/xoaSP_gioHang(id=${gio.id})}" class="btn btn-info" >xóa</a>
+                </td>
+            </tr>
             </tbody>
         </table>
     </div>
@@ -85,56 +87,81 @@
             </div>
             <div class="mb-3">
                 <label class="col-3">Ten Khach hang</label>
-                <input type="text" class="col-7" readonly>
+                <input type="text" th:value="${tenkhachhang}" class="col-7" readonly>
             </div>
             <div class="mb-3">
                 <label class="col-3">ID Hoa don</label>
-                <input type="text" class="col-7" readonly>
+                <input type="text" th:value="${idhd}"  class="col-7" readonly>
             </div>
             <div class="mb-3">
                 <label class="col-3">Tong tien</label>
-                <input type="text" class="col-7" readonly >
+                <input type="text" th:value="${tongtien}"  class="col-7" readonly >
             </div>
             <div class="text-center">
-                <a href="/ban-hang/tao-hd" class="btn btn-warning">Tạo hóa đơn</a>
+                <a th:href="@{/banhang/taohd}" class="btn btn-warning">Tạo hóa đơn</a>
                 <a href="/ban-hang/thanh-toan-hd" class="btn btn-success">Thanh toán</a>
             </div>
         </div>
-
+<!--        <p class="color-info" th:text="${mess}">thông báo SOS</p>-->
     </div>
+
 </div>
 <div>
     <h2>Danh sách chi tiết sản phẩm</h2>
-    <table class="table">
+    <table class="table " style="padding-top:150px">
         <thead>
         <tr>
-            <th scope="col">STT</th>
-            <th scope="col">Tên sản phẩm</th>
-            <th scope="col">Màu sắc</th>
-            <th scope="col">Size</th>
-            <th scope="col">Giá bán</th>
-            <th scope="col">Số lượng</th>
-            <th scope="col">Trạng thái</th>
-            <th scope="col">Thao tác</th>
+            <th>STT</th>
+            <th>Tên sản phẩm</th>
+            <th>Kích thước</th>
+            <th>màu sắc</th>
+            <th>giá</th>
+            <th>Số lượng</th>
+            <!--            <th>Ảnh</th>-->
+            <th>Thao tác</th>
         </tr>
         </thead>
         <tbody>
-
-        <tr class="table">
-            <td>1</td>
-            <td>1</td>
-            <td>1</td>
-            <td>1</td>
-            <td>1</td>
-            <td>1</td>
-            <td>1</td>
+        <tr th:each="spct, iterStat : ${SanPhamChiTietList}" >
+            <td th:text="${iterStat.index + 1}">1</td>
+            <td th:text="${spct.sanPham.tensp}">1</td>
+            <td th:text="${spct.kichThuoc.ten_kich_thuoc}">1</td>
+            <td th:text="${spct.mauSac.ten_mau_sac}">1</td>
+            <td th:text="${spct.don_gia}">1</td>
+            <td th:text="${spct.so_luong_san_pham}">1</td>
+            <!-- chưa có chỗ để ảnh    <td><img th:src="@{/images/ + ${spct.anh_san_pham_chi_tiet}}" alt="Ảnh sản phẩm" /></td>-->
+            <!--            <td th:text="${spct.anh_san_pham_chi_tiet}">1</td>-->
             <td>
-                <a class="btn btn-primary">Chọn mua</a>
+                <a class="btn btn-info" th:href="@{/banhang/chonsp(id=${spct.id})}">trọn mua</a>
             </td>
         </tr>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
         </tbody>
     </table>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                <a class="page-link" th:href="@{/banhang/HienThi}">Về đầu</a>
+            </li>
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">...</a>
+            </li>
+            <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                <a class="page-link" th:href="@{/banhang/(x=${currentPage - 1})}">&lt;&lt;&lt;</a>
+            </li>
+            <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}" th:classappend="${i == currentPage} ? 'active'">
+                <a class="page-link" th:href="@{/banhang/HienThi(x=${i})}" th:text="${i + 1}">1</a>
+            </li>
+            <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+                <a class="page-link" th:href="@{/banhang/HienThi(x=${currentPage + 1})}">&gt;&gt;&gt;</a>
+            </li>
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">...</a>
+            </li>
+            <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+                <a class="page-link" th:href="@{/banhang/HienThi(x=${totalPages - 1})}" th:text="${totalPages}">Cuối</a>
+            </li>
+        </ul>
+    </nav>
 </div>
 </body>
 </html>

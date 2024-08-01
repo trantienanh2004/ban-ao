@@ -11,4 +11,7 @@ public interface HoaDonctRepository extends JpaRepository<HoaDonCT,Integer> {
 
     @Query(value = "SELECT * FROM HOA_DON_CHI_TIET ct where ct.ID_HOA_DON = :id",nativeQuery = true)
     List<HoaDonCT> findbyhdct(@Param("id") int id);
+
+    List<HoaDonCT>findByHoaDonId(int id);
+
 }

@@ -10,8 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,42 +30,36 @@ public class SanPhamChiTietComtroller {
     SanPhamChiTietService sanPhamChiTietService;
     @Autowired
     SanPhamService sanPhamService;
-
-
     List<SanPhamChiTiet> sanPhamChiTietlist = new ArrayList<>();
-
     @GetMapping("/back")
     public String back(){
         return "/View/SanPham";
     }
-
     @GetMapping("/HienThi")
     public String spct(Model model, @RequestParam(name = "x", defaultValue = "0") int x) {
         model.addAttribute("SanPhamChiTiet", new SanPhamChiTiet());
         model.addAttribute("mauSacList", mauSacService.listMauSac());
         model.addAttribute("kichThuocList", kichThuocService.listKichThuoc());
-
         Page<SanPhamChiTiet> sanPhamChiTietPage = sanPhamChiTietService.sanPhamChiTietPage(x);
         model.addAttribute("SanPhamChiTietList", sanPhamChiTietPage.getContent());
         model.addAttribute("currentPage", x);
         model.addAttribute("totalPages", sanPhamChiTietPage.getTotalPages());
-
         model.addAttribute("listsanpham", sanPhamService.getAllsp());
         model.addAttribute("spdt", sanPhamChiTietlist);
-
         return "View/ChiTietSanPham";
     }
-
 
     @PostMapping("sanphamdetam")
     public String sanphamdetam(Model model,
                                @RequestParam("sanphamid") int sanphamid,
-                               @RequestParam("kichThuocIds") List<Integer> kichThuocIds,
-                               @RequestParam("mauSacIds") List<Integer> mauSacIds) {
-        
+                               @RequestParam(value = "kichThuocIds", required = false) List<Integer> kichThuocIds,
+                               @RequestParam(value = "mauSacIds", required = false) List<Integer> mauSacIds) {
+
+        if (kichThuocIds == null || mauSacIds == null) {
+            return "redirect:/ChiTietSanPham/HienThi";
+        }
         boolean exists = sanPhamChiTietlist.stream().anyMatch(s -> {
             boolean isSameProduct = s.getSanPham().getId() == sanphamid;
-
             boolean hasSameKichThuoc = kichThuocIds.contains(s.getKichThuoc().getId());
             boolean hasSameMauSac = mauSacIds.contains(s.getMauSac().getId());
             return isSameProduct && hasSameKichThuoc && hasSameMauSac ;
@@ -80,7 +72,6 @@ public class SanPhamChiTietComtroller {
                     newSpct.setAnh_san_pham_chi_tiet(null);
                     newSpct.setDon_gia(1000.0);
                     newSpct.setSo_luong_san_pham(1);
-
                     newSpct.setNgay_tao(LocalDate.now());
                     newSpct.setSanPham(sanPhamService.getOnesp(sanphamid));
                     if (kichThuocId != null) {
@@ -96,9 +87,9 @@ public class SanPhamChiTietComtroller {
             }
         }
         model.addAttribute("spdt", sanPhamChiTietlist);
-
         return "redirect:/ChiTietSanPham/HienThi";
     }
+
     @GetMapping("addSPCT")
     public String addSPCT() {
         for (SanPhamChiTiet spctadd : sanPhamChiTietlist) {
@@ -108,10 +99,10 @@ public class SanPhamChiTietComtroller {
                 boolean hasSameMauSac = spctadd.getMauSac().getId() == s.getMauSac().getId();
                 return isSameProduct && hasSameKichThuoc && hasSameMauSac;
             }).findFirst();
-
             if (existingProduct.isPresent()) {
                 SanPhamChiTiet spct = existingProduct.get();
                 spct.setSo_luong_san_pham(spct.getSo_luong_san_pham() + spctadd.getSo_luong_san_pham());
+                spct.setDon_gia(spctadd.getDon_gia());
                 sanPhamChiTietService.addspct(spct);
             } else {
                 sanPhamChiTietService.addspct(spctadd);
@@ -120,8 +111,6 @@ public class SanPhamChiTietComtroller {
         sanPhamChiTietlist.clear();
         return "redirect:/ChiTietSanPham/HienThi";
     }
-
-
     @GetMapping("/xoathanhtro")
     public String xoathanhtro( @RequestParam(name = "id") int x){
         List<SanPhamChiTiet> detamthoihehe = new ArrayList<>();
@@ -133,6 +122,25 @@ public class SanPhamChiTietComtroller {
          sanPhamChiTietlist.removeAll(detamthoihehe);
         return "redirect:/ChiTietSanPham/HienThi";
     }
+    @PostMapping("/updategigido")
+    public String updategigido_khongbietdattensao(
+            @RequestParam(name = "id") int x,
+            @RequestParam(name = "slsp") Integer slsp,
+            @RequestParam(name = "dongia") double dongia
+    ){
+        for (int i = 0 ;i<sanPhamChiTietlist.size();i++) {
+            if(sanPhamChiTietlist.get(i).getId().equals(x)){
+                sanPhamChiTietlist.get(i).setSo_luong_san_pham(slsp);
+                sanPhamChiTietlist.get(i).setDon_gia(dongia);
+            }
+        }
+        return "redirect:/ChiTietSanPham/HienThi";
+    }
 
+    @GetMapping("xoaspct")
+    public String xoaspct(@RequestParam(name = "id")int id){
+        sanPhamChiTietService.xoaspct(id);
+        return "redirect:/ChiTietSanPham/HienThi";
+    }
 
 }
