@@ -10,11 +10,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 
 @Controller
@@ -73,6 +72,7 @@ public class SanPhamChiTietComtroller {
                     newSpct.setDon_gia(1000.0);
                     newSpct.setSo_luong_san_pham(1);
                     newSpct.setNgay_tao(LocalDate.now());
+                    newSpct.setTrang_thai(true);
                     newSpct.setSanPham(sanPhamService.getOnesp(sanphamid));
                     if (kichThuocId != null) {
                         KichThuoc kichThuoc = kichThuocService.timtheoid(kichThuocId);
@@ -123,23 +123,37 @@ public class SanPhamChiTietComtroller {
         return "redirect:/ChiTietSanPham/HienThi";
     }
     @PostMapping("/updategigido")
-    public String updategigido_khongbietdattensao(
-            @RequestParam(name = "id") int x,
-            @RequestParam(name = "slsp") Integer slsp,
-            @RequestParam(name = "dongia") double dongia
-    ){
-        for (int i = 0 ;i<sanPhamChiTietlist.size();i++) {
-            if(sanPhamChiTietlist.get(i).getId().equals(x)){
-                sanPhamChiTietlist.get(i).setSo_luong_san_pham(slsp);
-                sanPhamChiTietlist.get(i).setDon_gia(dongia);
+    public String updategigido(
+            @RequestParam(name = "ids") List<Integer> ids,
+            @RequestParam(name = "slsp") List<Integer> slspList,
+            @RequestParam(name = "dongia") List<Double> dongiaList
+    ) {
+        for (int i = 0; i < ids.size(); i++) {
+            int id = ids.get(i);
+            Integer slsp = slspList.get(i);
+            double dongia = dongiaList.get(i);
+
+            for (SanPhamChiTiet spct : sanPhamChiTietlist) {
+                if (spct.getId() == id) {
+                    spct.setSo_luong_san_pham(slsp);
+                    spct.setDon_gia(dongia);
+                }
             }
         }
         return "redirect:/ChiTietSanPham/HienThi";
     }
 
-    @GetMapping("xoaspct")
-    public String xoaspct(@RequestParam(name = "id")int id){
-        sanPhamChiTietService.xoaspct(id);
+
+
+    @GetMapping("thaydoitrangthai")
+    public String thaydoitrangthai(@RequestParam(name = "id")int id){
+       SanPhamChiTiet sanPhamChiTiet = sanPhamChiTietService.timkiemspct(id);
+        if(sanPhamChiTiet.isTrang_thai()){
+            sanPhamChiTiet.setTrang_thai(false);
+        }else{
+            sanPhamChiTiet.setTrang_thai(true);
+        }
+        sanPhamChiTietService.addspct(sanPhamChiTiet);
         return "redirect:/ChiTietSanPham/HienThi";
     }
 

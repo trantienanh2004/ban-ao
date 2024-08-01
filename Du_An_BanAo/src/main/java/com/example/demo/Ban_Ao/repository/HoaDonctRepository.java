@@ -13,5 +13,5 @@ public interface HoaDonctRepository extends JpaRepository<HoaDonCT,Integer> {
     List<HoaDonCT> findbyhdct(@Param("id") int id);
 
     List<HoaDonCT>findByHoaDonId(int id);
-
+   // HoaDonCT findById(int id);
 }

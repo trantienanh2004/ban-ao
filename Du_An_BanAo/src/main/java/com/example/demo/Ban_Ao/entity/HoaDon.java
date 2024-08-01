@@ -31,7 +31,7 @@ public class HoaDon {
     private int soluong;
 
     @Column(name = "DON_GIA")
-    private BigDecimal dongia;
+    private Double dongia;
 
     @Column(name = "NGAY_MUA")
     private LocalDate ngaymua;
@@ -43,7 +43,7 @@ public class HoaDon {
     private LocalDate ngaysua;
 
     @Column(name = "TONG_TIEN")
-    private BigDecimal tongtien;
+    private Double tongtien;
 
     @Column(name = "TRANG_THAI")
     private int trangthai;

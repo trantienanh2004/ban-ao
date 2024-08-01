@@ -113,24 +113,42 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="spct, iterStat : ${spdt}">
-            <form th:action="@{/ChiTietSanPham/updategigido(id=${spct.id})}" method="post" >
-            <td th:text="${iterStat.index + 1}"></td>
-            <td th:text="${spct.sanPham.tensp}"></td>
-            <td th:text="${spct.kichThuoc.ten_kich_thuoc}"></td>
-            <td th:text="${spct.mauSac.ten_mau_sac}"></td>
-            <td><input type="text" name="dongia" th:value="${spct.don_gia}"></td>
-            <td><input type="text" name="slsp" th:value="${spct.so_luong_san_pham}"></td>
-            <!--            <td><img th:src="@{/images/ + ${spct.anh_san_pham_chi_tiet}}" alt="Ảnh sản phẩm" /></td>-->
-<!--            <td th:text="${spct.anh_san_pham_chi_tiet}">hihi</td>-->
-            <td>
-                <a th:href="@{/ChiTietSanPham/xoathanhtro(id=${spct.id})}" class="btn btn-danger">
-                    <i class="fa-solid fa-trash-can" style="color: #000000; font-size: 25px"></i>
-                </a>
-                <button>update</button>
-            </td>
-            </form>
-        </tr>
+        <form action="/ChiTietSanPham/updategigido" method="post">
+            <table>
+                <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Kích thước</th>
+                    <th>Màu sắc</th>
+                    <th>Đơn giá</th>
+                    <th>Số lượng</th>
+                    <th>Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="spct, iterStat : ${spdt}">
+                    <td th:text="${iterStat.index + 1}"></td>
+                    <td th:text="${spct.sanPham.tensp}"></td>
+                    <td th:text="${spct.kichThuoc.ten_kich_thuoc}"></td>
+                    <td th:text="${spct.mauSac.ten_mau_sac}"></td>
+                    <td><input type="text" name="dongia" th:value="${spct.don_gia}"></td>
+                    <td><input type="text" name="slsp" th:value="${spct.so_luong_san_pham}"></td>
+                    <td>
+                        <a th:href="@{/ChiTietSanPham/xoathanhtro(id=${spct.id})}" class="btn btn-danger">
+                            <i class="fa-solid fa-trash-can" style="color: #000000; font-size: 25px"></i>
+                        </a>
+                        <!-- No need to place button inside the form, as this is not necessary for the update. -->
+                    </td>
+                    <!-- Add hidden field for each product ID -->
+                    <input type="hidden" name="ids" th:value="${spct.id}" />
+                </tr>
+                </tbody>
+            </table>
+            <button type="submit" class="btn btn-success">Cập nhật tất cả</button>
+        </form>
+
+
         </tbody>
     </table>
 </div>
@@ -148,6 +166,7 @@
             <th>giá</th>
             <th>Số lượng</th>
 <!--            <th>Ảnh</th>-->
+            <th>trạng thái</th>
             <th>Thao tác</th>
         </tr>
         </thead>
@@ -159,13 +178,18 @@
             <td th:text="${spct.mauSac.ten_mau_sac}">1</td>
             <td th:text="${spct.don_gia}">1</td>
             <td th:text="${spct.so_luong_san_pham}">1</td>
+            <td th:text="${spct.trang_thai ? 'MỞ' : 'ĐÓNG'}"
+                th:classappend="${spct.trang_thai ? 'bg-success' : 'bg-danger'}">
+            </td>
+
             <!-- chưa có chỗ để ảnh    <td><img th:src="@{/images/ + ${spct.anh_san_pham_chi_tiet}}" alt="Ảnh sản phẩm" /></td>-->
 <!--            <td th:text="${spct.anh_san_pham_chi_tiet}">1</td>-->
             <td>
                 <a type="button" data-bs-toggle="modal" data-bs-target="#update">
-                    <i class="fa-solid fa-plus" style="color: red;font-size: 25px"></i>
+                    <i class="fa-solid fa-pen-to-square" style="color: #000000; font-size: 25px" ></i>
                 </a>
-                <a class="btn btn-info" th:href="@{/ChiTietSanPham/xoaspct(id=${spct.id})}">delete</a>
+                <a class="btn btn-info" th:href="@{/ChiTietSanPham/thaydoitrangthai(id=${spct.id})}">
+                    <i class="fa-solid fa-trash-can" style="color: red; font-size: 25px"></i></a>
             </td>
         </tr>
         </tbody>

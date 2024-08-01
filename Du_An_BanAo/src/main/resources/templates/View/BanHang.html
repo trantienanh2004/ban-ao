@@ -55,22 +55,26 @@
                 <th>chất liệu</th>
                 <th>đơn giá</th>
                 <th>Số lượng sản phẩm</th>
-                <!--            <th>Ảnh</th>-->
+                <!--<th> sản phẩm chi tiết không cần phải có Ảnh</th>-->
                 <th>Thao tác</th>
             </tr>
             </thead>
             <tbody>
+
             <tr th:each="gio, i : ${giohang}" >
+                <form th:action="@{/banhang/updategiohang(id=${gio.id})}" method="post">
                 <td th:text="${i.index + 1}">1</td>
                 <td th:text="${gio.sanPhamChiTiet.sanPham.tensp}">1</td>
                 <td th:text="${gio.sanPhamChiTiet.kichThuoc.ten_kich_thuoc}">1</td>
                 <td th:text="${gio.sanPhamChiTiet.mauSac.ten_mau_sac}">1</td>
                 <td th:text="${gio.sanPhamChiTiet.sanPham.chatLieu.ten_chat_lieu}">1</td>
                 <td th:text="${gio.sanPhamChiTiet.don_gia}">1</td>
-                <td th:text="${gio.soluong}">1</td>
+                <td><input type="text" th:value="${gio.soluong}" name="soluongsp"></td>
                 <td>
-                    <a th:href="@{/banhang/xoaSP_gioHang(id=${gio.id})}" class="btn btn-info" >xóa</a>
+                    <button class="btn btn-success">update</button>
+                    <a th:href="@{/banhang/xoaSP_gioHang(id=${gio.id})}" class="btn btn-info" >delete</a>
                 </td>
+                </form>
             </tr>
             </tbody>
         </table>
@@ -99,13 +103,51 @@
             </div>
             <div class="text-center">
                 <a th:href="@{/banhang/taohd}" class="btn btn-warning">Tạo hóa đơn</a>
-                <a href="/ban-hang/thanh-toan-hd" class="btn btn-success">Thanh toán</a>
+                <a th:href="@{/banhang/thanhtoan}" class="btn btn-success">Thanh toán</a>
             </div>
         </div>
 <!--        <p class="color-info" th:text="${mess}">thông báo SOS</p>-->
     </div>
 
 </div>
+
+<form th:action="@{/banhang/locsp}" method="get">
+    <div class="card text-bg-light" style="height: 100px; top:50px;">
+        <div class="row" style="padding-left: 50px; padding-top:25px">
+            <div class="col-md-2">
+                <h3>Bộ lọc:</h3>
+            </div>
+            <div class="col-md-4" style="padding-right: 50px; margin-top: -15px">
+                <input type="text" class="form-control" placeholder="Tên sản phẩm" name="tenSanPham">
+                <div style="padding-top: 5px">
+                    <select class="form-select" name="chatLieu">
+                        <option selected th:value="null"></option>
+                        <option th:each="chatLieu : ${chatLieuList}" th:value="${chatLieu.ten_chat_lieu}" th:text="${chatLieu.ten_chat_lieu}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3" style="padding-right: 50px; margin-top: -15px">
+                <select class="form-select" name="mauSac">
+                    <option selected th:value="null"></option>
+                    <option th:each="mauSac : ${mauSacList}" th:value="${mauSac.ten_mau_sac}" th:text="${mauSac.ten_mau_sac}"></option>
+                </select>
+                <div style="padding-top: 5px">
+                    <select class="form-select" name="kichThuoc">
+                        <option selected th:value="null"></option>
+                        <option th:each="kichThuoc : ${kichThuocList}" th:value="${kichThuoc.ten_kich_thuoc}" th:text="${kichThuoc.ten_kich_thuoc}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn active">
+                    <i class="fa-solid fa-rotate-right" style="color: #000000;"></i> tìm kiếm
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+
+
 <div>
     <h2>Danh sách chi tiết sản phẩm</h2>
     <table class="table " style="padding-top:150px">
@@ -122,7 +164,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="spct, iterStat : ${SanPhamChiTietList}" >
+        <tr th:each="spct, iterStat : ${SanPhamChiTietList}" th:if="${spct.trang_thai==true}" >
             <td th:text="${iterStat.index + 1}">1</td>
             <td th:text="${spct.sanPham.tensp}">1</td>
             <td th:text="${spct.kichThuoc.ten_kich_thuoc}">1</td>

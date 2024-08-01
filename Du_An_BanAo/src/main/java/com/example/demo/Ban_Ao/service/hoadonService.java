@@ -19,7 +19,7 @@ public class hoadonService {
     HoaDonctRepository hoaDonctRepository;
     public  Integer idhoadon = null ;
     public  Double Tongtien = 0.0;
-    public  String tenkhachhang = null;
+    public  Integer tenkhachhang = null;
     public List<HoaDon> hoaDons(){
         return hoaDonRepository.findAll();
     }
@@ -64,4 +64,5 @@ public class hoadonService {
     public void deleteHDCT(int id){
         hoaDonctRepository.deleteById(id);
     }
+    public HoaDonCT timkiemHDCT(int id){return hoaDonctRepository.findById(id).orElse(null);}
 }

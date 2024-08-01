@@ -10,4 +10,5 @@ import java.util.List;
 public interface hoaDonRepository extends JpaRepository<HoaDon,Integer> {
     public List<HoaDon> findByMahoadon(String ma);
     Integer countByTrangthai(int trangThai);
+
 }

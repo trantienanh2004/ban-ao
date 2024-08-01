@@ -387,7 +387,28 @@ SELECT * FROM SAN_PHAM_CHI_TIET
 select * from NHAN_VIEN
 select * from HOA_DON_CHI_TIET
 select * from HOA_DON
+select * from CHAT_LIEU
  
+
+
+DECLARE @tenSanPham NVARCHAR(255) = N'áo thun nam'; 
+DECLARE @chatLieu NVARCHAR(255) =  null; 
+DECLARE @mauSac NVARCHAR(255) = null; 
+DECLARE @kichThuoc NVARCHAR(255) = null; 
+
+SELECT spct.*
+FROM SAN_PHAM_CHI_TIET spct
+INNER JOIN SAN_PHAM sp ON spct.ID_SAN_PHAM = sp.ID
+INNER JOIN KICH_THUOC kt ON spct.ID_KICH_THUOC = kt.ID
+INNER JOIN MAU_SAC ms ON spct.ID_MAU_SAC = ms.ID
+INNER JOIN CHAT_LIEU cl ON sp.ID_CHAT_LIEU = cl.ID
+WHERE 
+    (sp.TEN_SAN_PHAM LIKE '%' + COALESCE(@tenSanPham, '') + '%' OR @tenSanPham IS NULL)
+    AND (kt.TEN_KICH_THUOC = @kichThuoc OR @kichThuoc IS NULL)
+    AND (ms.TEN_MAU_SAC = @mauSac OR @mauSac IS NULL)
+    AND (cl.TEN_CHAT_LIEU = @chatLieu OR @chatLieu IS NULL);
+
+
 
 
 
